@@ -69,8 +69,8 @@ function paragraphText(callback) {
 	callback('And some paragraph text...');
 }
 
-function paddedBlueStyle() {
-	return {background:'blue', padding:10};
+function paddedBlueStyle(callback) {
+	callback({background:'blue', padding:10});
 }
 
 var moreTagsWithFunctions = {body:[
