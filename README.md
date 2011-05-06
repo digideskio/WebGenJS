@@ -60,8 +60,8 @@ var moreTagsImplicitDiv = {body:[
 
 Both body and style can be replaced by function objects that generates data:
 <pre>
-function redHeading() {
-	return {tag:'h1', body:'Awesome red heading!', style:{color:'red'}};
+function redHeading(callback) {
+	callback({tag:'h1', body:'Awesome red heading!', style:{color:'red'}});
 }
 
 function paragraphText(callback) {
