@@ -1,0 +1,15 @@
+{
+	"name" : "WebGenJS",
+	"version" : "0.0.1",
+	"author": "Magnus Ernstsson <magnus.ernstsson@patchworksolutions.com>",
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/ernstsson/node-jsml.git"
+	},
+	"keywords": ["web", "jsml", "html", "jss", "css"],
+	"directories" : {
+		"lib" : "./lib",
+		"examples" : "./examples"
+	},
+	"main" : "./lib/webgenjs"
+}
