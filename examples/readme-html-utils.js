@@ -27,6 +27,8 @@ those of the authors and should not be interpreted as representing official
 policies, either expressed or implied, of Patchwork Solutions AB.
 */
 
+'use strict';
+
 //=============================================================================
 //= Utility functions
 //=============================================================================
@@ -71,7 +73,7 @@ var buddyStyle = {
 
 function Buddy(name) {
 	this.name = name;
-	this.toJSML = function(callback) {
+	this.toJSML = function (callback) {
 		callback({style:buddyStyle, body:this.name});
 	}
 }
