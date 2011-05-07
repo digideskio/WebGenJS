@@ -52,19 +52,20 @@ var buddies = [
 
 var gridWidth = 2;
 
-var buddyLayout = {body:utils.gridLayout(buddies, gridWidth)};
+var buddyLayout = {body: utils.gridLayout(buddies, gridWidth)};
 
 //=============================================================================
 //Any object implementing toJSML can be used in the layouts. This can be
 //used to create a domain specific layout syntax:
 
 var buddyStyle = {
-	border:"2px solid black",
-	padding:"10px 10px 10px 10px",
-	"-webkit-border-radius":"8px",
-	"-moz-border-radius":"8px",
-	"border-radius":"8px",
-	background:["-webkit-gradient(linear, left top, left bottom, " +
+	border: "2px solid black",
+	padding: "10px 10px 10px 10px",
+	"-webkit-border-radius": "8px",
+	"-moz-border-radius": "8px",
+	"border-radius": "8px",
+	background: [
+		"-webkit-gradient(linear, left top, left bottom, " +
 			"from(#FFFFFF), to(#B0B0B0))",
 		"-moz-linear-gradient(top, #FFFFFF, #B0B0B0)",
 		"linear-gradient(top, #FFFFFF, #B0B0B0)"
@@ -74,8 +75,8 @@ var buddyStyle = {
 function Buddy(name) {
 	this.name = name;
 	this.toJSML = function (callback) {
-		callback({style:buddyStyle, body:this.name});
-	}
+		callback({style: buddyStyle, body: this.name});
+	};
 }
 
 var buddyObjects = [
@@ -89,13 +90,13 @@ var buddyObjects = [
 
 var gridWidth = 2;
 
-var buddyObjectLayout = {body:utils.gridLayout(buddyObjects, gridWidth)};
+var buddyObjectLayout = {body: utils.gridLayout(buddyObjects, gridWidth)};
 
 //=============================================================================
 //Lists, such as numbered lists, can be used like this:
 var startNumber = 33;
 
-var numberedList = {body:utils.numberedList(buddies, startNumber)};
+var numberedList = {body: utils.numberedList(buddies, startNumber)};
 
 //=============================================================================
 //Scripts can be deployed in the page like this:
@@ -117,7 +118,7 @@ var loadScript = utils.loadScript(loadScript);
 
 //=============================================================================
 //And again, HTML can be generated like this:
-var allExamples = {body:[
+var allExamples = {body: [
 	breakThatLine,
 	buddyLayout,
 	buddyObjectLayout,
@@ -128,6 +129,6 @@ var allExamples = {body:[
 
 var htmlgen = require('../lib/htmlgen');
 
-htmlgen.generateHTML(allExamples, function(htmlString) {
+htmlgen.generateHTML(allExamples, function (htmlString) {
 	console.log(htmlString);
 });

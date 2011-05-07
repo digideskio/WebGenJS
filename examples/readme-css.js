@@ -36,13 +36,13 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 //=============================================================================
 //The style sheet model is just any JavaScript object, using a few special
 //properties. Here is an example of a simple style:
-var tagSelector = {sel:'h1', style:{color:'red'}};
+var tagSelector = {sel: 'h1', style: {color: 'red'}};
 
-var idSelector = {id:'body', style:{color:'blue'}};
+var idSelector = {id: 'body', style: {color: 'blue'}};
 
-var classSelector = {cl:'body', style:{color:'green'}};
+var classSelector = {cl: 'body', style: {color: 'green'}};
 
-var classAndTagSelector = {sel:'h1', cl:'stuff', style:{color:'white'}};
+var classAndTagSelector = {sel: 'h1', cl: 'stuff', style: {color: 'white'}};
 
 var allExamples = [
 	tagSelector,
