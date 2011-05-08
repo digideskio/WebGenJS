@@ -36,6 +36,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 //=============================================================================
 //The utility functions can be accessed like this:
 var utils = require('../lib/htmlutils');
+var styleutils = require('../lib/styleutils');
+
 
 var breakThatLine = utils.br;
 
@@ -47,7 +49,9 @@ var buddies = [
 	'Bjorn',
 	'Ulf',
 	'Nathalie',
-	'Truls'
+	'Truls',
+	'Eva',
+	'Karl-Anders'
 ];
 
 var gridWidth = 2;
@@ -58,24 +62,19 @@ var buddyLayout = {body: utils.gridLayout(buddies, gridWidth)};
 //Any object implementing toJSML can be used in the layouts. This can be
 //used to create a domain specific layout syntax:
 
-var buddyStyle = {
-	border: "2px solid black",
-	padding: "10px 10px 10px 10px",
-	"-webkit-border-radius": "8px",
-	"-moz-border-radius": "8px",
-	"border-radius": "8px",
-	background: [
-		"-webkit-gradient(linear, left top, left bottom, " +
-			"from(#FFFFFF), to(#B0B0B0))",
-		"-moz-linear-gradient(top, #FFFFFF, #B0B0B0)",
-		"linear-gradient(top, #FFFFFF, #B0B0B0)"
-	]
-};
+var buddyStyle = [
+	styleutils.borderRadius('8px'),
+	styleutils.linearGradientTop('#FFFFFF', '#B0B0B0'),
+	{
+		border: "2px solid black",
+		padding: "10px 10px 10px 10px"
+	}
+];
 
 function Buddy(name) {
 	this.name = name;
 	this.toJSML = function (callback) {
-		callback({style: buddyStyle, body: this.name});
+		callback(null, {style: buddyStyle, body: this.name});
 	};
 }
 
@@ -85,7 +84,9 @@ var buddyObjects = [
 	new Buddy('Bjorn'),
 	new Buddy('Ulf'),
 	new Buddy('Nathalie'),
-	new Buddy('Truls')
+	new Buddy('Truls'),
+	new Buddy('Eva'),
+	new Buddy('Karl-Anders')
 ];
 
 var gridWidth = 2;
@@ -129,6 +130,6 @@ var allExamples = {body: [
 
 var htmlgen = require('../lib/htmlgen');
 
-htmlgen.generateHTML(allExamples, function (htmlString) {
+htmlgen.generateHTML(allExamples, function (err, htmlString) {
 	console.log(htmlString);
 });
