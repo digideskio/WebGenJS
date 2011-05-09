@@ -1,3 +1,4 @@
+#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -29,30 +30,75 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var stylegen = require('./stylegen');
-var classgen = require('./classgen');
-var xmlgen = require('./xmlgen');
-var htmlval = require('./htmlval');
+var assert = require('assert');
+var classgen = require('../lib/classgen');
+var testrunner = require('./testrunner');
 
-var defaultTag = 'div';
+testrunner.runTests([
 
-function generateHTML(html, callback) {
-	process.nextTick(function () {
-		xmlgen.generateXML(
-			html,
-			{attributeGenerators:
-				{style: stylegen.generateStyle,
-				'class': classgen.generateClass},
-				defaultTag: defaultTag,
-				tagValidator: htmlval.validateTag
-			},
-			function (err, result) {
-				callback(err, result);
-			}
-		);
+function classAsString(callback) {
+	var input = 'class2';
+
+	var expectedOutput = 'class2';
+
+	classgen.generateClass(input, function(err, result) {
+		assert.strictEqual(result, expectedOutput);
+		callback();
+	});
+},
+
+function classesAsArray(callback) {
+	var input = ['class1', 'class2'];
+
+	var expectedOutput = 'class1 class2';
+
+	classgen.generateClass(input, function(err, result) {
+		assert.strictEqual(result, expectedOutput);
+		callback();
+	});
+},
+
+function classesAsFunction(callback) {
+	 function input(callback) {
+		callback(null, ['class1', 'class2']);
+	}
+
+	var expectedOutput = 'class1 class2';
+
+	classgen.generateClass(input, function(err, result) {
+		assert.strictEqual(result, expectedOutput);
+		callback();
+	});
+},
+
+function classesAsFunctionWithError(callback) {
+	var expectedError = 'Test4Error';
+
+	function input(callback) {
+		callback(expectedError);
+	}
+
+	classgen.generateClass(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.strictEqual(err, expectedError);
+		callback();
+	});
+},
+
+function classWith100Classes(callback) {
+	var i;
+	var input = [];
+	var expectedOutput;
+
+	for (i = 0; i < 100; i++) {
+		input.push('class' + i);
+	}
+
+	expectedOutput = input.join(' ');
+
+	classgen.generateClass(input, function(err, result) {
+		assert.strictEqual(result, expectedOutput);
+		callback();
 	});
 }
-
-var exports;
-
-exports.generateHTML = generateHTML;
+]);

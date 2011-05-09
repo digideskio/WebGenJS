@@ -1,3 +1,4 @@
+#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -31,148 +32,88 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 var assert = require('assert');
 var cssgen = require('../lib/cssgen');
+var testrunner = require('./testrunner');
 
-var timeout = 100;
-var calls = 1000;
-var counter = 1;
+testrunner.runTests([
 
-function testGenerateCSS(input, callback) {
-	var test = 'Test ' + counter++;
-	var i;
-	var count = 0;
-	
-	var testTimeout = setTimeout(function () {
-		assert.ok(false, test + ' timed out');
-	}, (timeout * calls));
-
-	var startTime = (new Date()).getTime();
-	var time;
-	
-	for (i = 0; i < calls; i++) {
-		count++;
-		cssgen.generateCSS(input, function (err, result) {
-			count--;
-			var endTime = (new Date).getTime();
-			clearTimeout(testTimeout);
-			if (count === 0) {
-				callback(err, result);
-				time = (endTime - startTime);
-				console.log(test + ': ' + 
-					time + ' ms (average ' + (time / calls) + 'ms).');
-			}
-		});
-	}
-}
-
-//=============================================================================
-// Test 1
-function test1(callback) {
+function cssWithSelector(callback) {
 	var input = {sel: 'p', style: {color: 'red'}};
 
 	var expectedOutput = 'p { color:red; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 2
-function test2(callback) {
+function cssWithId(callback) {
 	var input = {id: 'body', style: {color: 'blue'}};
 
 	var expectedOutput = '#body { color:blue; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 3
-function test3(callback) {
+function cssWithClass(callback) {
 	var input = {cl: 'body', style: {color: 'green'}};
 
 	var expectedOutput = '.body { color:green; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 4
-function test4(callback) {
+function cssWithSelectorAndClass(callback) {
 	var input = {sel: 'h1', cl: 'stuff', style: {color: 'white'}};
 
 	var expectedOutput = 'h1.stuff { color:white; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 5
-function test5(callback) {
+function cssWithSelectorAndIdWithError(callback) {
 	var input = {sel: 'h1', id: 'stuff', style: {color: 'white'}};
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.ok(typeof result === 'undefined');
 		assert.notStrictEqual(err, null);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 6
-function test6(callback) {
+function cssWithClassAndIdWithError(callback) {
 	var input = {cl: 'h1', id: 'stuff', style: {color: 'white'}};
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.ok(typeof result === 'undefined');
 		assert.notStrictEqual(err, null);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 7
-function test7(callback) {
+function cssAsFunction(callback) {
 	function input (callback) {
 		callback(null, {sel: 'p', style: {color: 'red'}});
 	}
 
 	var expectedOutput = 'p { color:red; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 8
-function test8(callback) {
-	function input (callback) {
-		callback(null, {sel: 'p', style: {color: 'red'}});
-	}
-
-	var expectedOutput = 'p { color:red; }\n';
-
-	testGenerateCSS(input, function(err, result) {
-		assert.strictEqual(result, expectedOutput);
-		callback();
-	});
-}
-
-//=============================================================================
-// Test 9
-function test9(callback) {
+function cssAsArray(callback) {
 	var input = [
 		{sel: 'p', style: {color: 'red'}},
 		{id: 'body', style: {color: 'blue'}}
@@ -180,15 +121,13 @@ function test9(callback) {
 
 	var expectedOutput = 'p { color:red; }\n#body { color:blue; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 10
-function test10(callback) {
+function cssWithStyleAsFunction(callback) {
 
 	function styleFunc(callback) {
 		callback(null, {color: 'blue'});
@@ -198,15 +137,13 @@ function test10(callback) {
 
 	var expectedOutput = 'p { color:blue; }\n';
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 11
-function test11(callback) {
+function cssWithStyleAsFunctionWithError(callback) {
 	var expectedError = 'Test11Error';
 
 	function styleFunc(callback) {
@@ -215,93 +152,51 @@ function test11(callback) {
 
 	var input = {sel: 'p', style: styleFunc};
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.ok(typeof result === 'undefined');
 		assert.strictEqual(err, expectedError);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 12
-function test12(callback) {
+function cssAsFunctionWithError(callback) {
 	var expectedError = 'Test12Error';
 
 	function input(callback) {
 		callback(expectedError);
 	}
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.ok(typeof result === 'undefined');
 		assert.strictEqual(err, expectedError);
 		callback();
 	});
-}
+},
 
-//=============================================================================
-// Test 13
-function test13(callback) {
+function cssWithInvalidStyleAndError(callback) {
+	var input = {cl: 'body', style: { nonstyle: 'styleval'}};
+
+	cssgen.generateCSS(input, function (err, result) {
+			assert.ok(typeof result === 'undefined');
+			assert.notStrictEqual(err, null);
+			callback();
+	});
+},
+
+function cssWith100Classes(callback) {
 	var i;
 	var input = [];
 	var expectedOutput = '';
-	
+
 	for (i = 0; i < 100; i++) {
 		input.push({cl: 'body' + i, style: {color: 'green'}});
 		expectedOutput = expectedOutput.concat(
 			'.body' + i +' { color:green; }\n');
 	}
 
-	testGenerateCSS(input, function(err, result) {
+	cssgen.generateCSS(input, function(err, result) {
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
 }
-
-//=============================================================================
-// Test 14
-function test14(callback) {
-	var input = {cl: 'body', style: { nonstyle: 'styleval'}};
-
-	testGenerateCSS(input, function (err, result) {
-			assert.ok(typeof result === 'undefined');
-			assert.notStrictEqual(err, null);
-			callback();
-	});
-}
-
-//=============================================================================
-// Test Runner
-
-function runAllTests() {
-	var tests = [
-		test1,
-		test2,
-		test3,
-		test4,
-		test5,
-		test6,
-		test7,
-		test8,
-		test9,
-		test10,
-		test11,
-		test12,
-		test13,
-		test14
-	];
-
-	var testCounter = 0;
-
-	function serializeTest() {
-		if (testCounter < tests.length) {
-			tests[testCounter](serializeTest);
-			testCounter++;
-		}
-	}
-
-	console.log(__filename);
-	console.log(calls + ' calls per test.');
-	serializeTest();
-}
-
-runAllTests();
+]);
