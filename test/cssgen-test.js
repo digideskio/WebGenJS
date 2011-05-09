@@ -42,6 +42,7 @@ function cssWithSelector(callback) {
 	var expectedOutput = 'p { color:red; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -53,6 +54,7 @@ function cssWithId(callback) {
 	var expectedOutput = '#body { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -64,6 +66,7 @@ function cssWithClass(callback) {
 	var expectedOutput = '.body { color:green; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -75,6 +78,7 @@ function cssWithSelectorAndClass(callback) {
 	var expectedOutput = 'h1.stuff { color:white; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -108,6 +112,7 @@ function cssAsFunction(callback) {
 	var expectedOutput = 'p { color:red; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -122,6 +127,7 @@ function cssAsArray(callback) {
 	var expectedOutput = 'p { color:red; }\n#body { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -138,6 +144,7 @@ function cssWithStyleAsFunction(callback) {
 	var expectedOutput = 'p { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -195,6 +202,7 @@ function cssWith100Classes(callback) {
 	}
 
 	cssgen.generateCSS(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});

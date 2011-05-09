@@ -42,6 +42,7 @@ function stringAsString(callback) {
 	var expectedOutput = 'string';
 
 	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -53,6 +54,7 @@ function stringEmpty(callback) {
 	var expectedOutput = '';
 
 	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -64,6 +66,7 @@ function stringAsArrayWithOneString(callback) {
 	var expectedOutput = 'string';
 
 	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -75,6 +78,7 @@ function stringAsArrayWithMultipleStrings(callback) {
 	var expectedOutput = 'stringstring';
 
 	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -86,6 +90,7 @@ function stringAsArrayOfArrays(callback) {
 	var expectedOutput = 'stringstring';
 
 	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -103,6 +108,7 @@ function stringWith100StringsIn100Arrays(callback) {
 	}
 	
 	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});

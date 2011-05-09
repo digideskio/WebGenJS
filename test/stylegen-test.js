@@ -42,6 +42,7 @@ function styleAsOneValue(callback) {
 	var expectedOutput = 'background:red;';
 
 	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -53,6 +54,7 @@ function styleAsMultipleValuesWithNumber(callback) {
 	var expectedOutput = 'background:red;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -66,6 +68,7 @@ function styleAsFunction(callback) {
 	var expectedOutput = 'background:red;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -91,6 +94,7 @@ function styleAsArray(callback) {
 	var expectedOutput = 'background:red;height:100;width:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -102,6 +106,7 @@ function styleWithValuesAsArray(callback) {
 	var expectedOutput = 'background:red;background:green;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -118,6 +123,7 @@ function styleWith100Styles(callback) {
 	}
 
 	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});

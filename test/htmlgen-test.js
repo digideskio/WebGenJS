@@ -50,6 +50,7 @@ function htmlWithStringAsBody(callback) {
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -60,6 +61,7 @@ function htmlWithStringArrayAsBody(callback) {
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -79,6 +81,7 @@ function htmlWithTagArrayAsBody(callback) {
 		'</div>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -91,6 +94,7 @@ function htmlWithFunctionAsBody(callback) {
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -105,6 +109,7 @@ function htmlAsFunction(callback) {
 
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -117,6 +122,7 @@ function htmlWithArrayWithFunctionAsBody(callback) {
 	var expectedOutput = '<p>\nbody1\nbody2\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -127,6 +133,7 @@ function htmlWithoutBodyWithAttribute(callback) {
 	var expectedOutput = '<img src=\"img.png\" />\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
 		callback();
 	});
@@ -144,6 +151,7 @@ function htmlWithDefaultTagAndBodyAndAttribute(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
+			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
 			callback();
 		}
@@ -162,6 +170,7 @@ function htmlWithStyleAndClass(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
+			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
 			callback();
 		}
@@ -204,6 +213,7 @@ function htmlWithStyleAsFunction(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
+			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
 			callback();
 		}
@@ -222,6 +232,7 @@ function htmlWithClassAsFunction(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
+			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
 			callback();
 		}
@@ -264,6 +275,29 @@ function htmlWithClassAsFunctionWithError(callback) {
 	);
 },
 
+function htmlWithJSMLObject(callback) {
+	var empty;
+	var input;
+	var expectedOutput;
+
+	function JSMLObject() {
+		this.toJSML = function (callback) {
+			callback(null, {tag: 'div', body: {tag: 'br'}});
+		}
+	}
+	input = new JSMLObject();
+
+	expectedOutput = '<div>\n<br />\n</div>\n';
+
+	htmlgen.generateHTML(input,
+		function(err, result) {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+			callback();
+		}
+	);
+},
+
 function htmlWith100Tags(callback) {
 	var i;
 	var body = [];
@@ -279,6 +313,7 @@ function htmlWith100Tags(callback) {
 	expectedOutput = expectedOutput.concat('</div>\n');
 	htmlgen.generateHTML(input,
 		function (err, result) {
+			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
 			callback();
 	});
