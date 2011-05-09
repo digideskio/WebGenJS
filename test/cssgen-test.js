@@ -31,8 +31,9 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 'use strict';
 
 var assert = require('assert');
+var testrunner = require('testrunner');
 var cssgen = require('../lib/cssgen');
-var testrunner = require('./testrunner');
+
 
 testrunner.runTests([
 
@@ -42,9 +43,10 @@ function cssWithSelector(callback) {
 	var expectedOutput = 'p { color:red; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -54,9 +56,10 @@ function cssWithId(callback) {
 	var expectedOutput = '#body { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -66,9 +69,10 @@ function cssWithClass(callback) {
 	var expectedOutput = '.body { color:green; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -78,9 +82,10 @@ function cssWithSelectorAndClass(callback) {
 	var expectedOutput = 'h1.stuff { color:white; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -88,9 +93,10 @@ function cssWithSelectorAndIdWithError(callback) {
 	var input = {sel: 'h1', id: 'stuff', style: {color: 'white'}};
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.ok(typeof result === 'undefined');
-		assert.notStrictEqual(err, null);
-		callback();
+		callback(function () {
+			assert.ok(typeof result === 'undefined');
+			assert.notStrictEqual(err, null);
+		});
 	});
 },
 
@@ -98,9 +104,10 @@ function cssWithClassAndIdWithError(callback) {
 	var input = {cl: 'h1', id: 'stuff', style: {color: 'white'}};
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.ok(typeof result === 'undefined');
-		assert.notStrictEqual(err, null);
-		callback();
+		callback(function () {
+			assert.ok(typeof result === 'undefined');
+			assert.notStrictEqual(err, null);
+		});
 	});
 },
 
@@ -112,9 +119,10 @@ function cssAsFunction(callback) {
 	var expectedOutput = 'p { color:red; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -127,9 +135,10 @@ function cssAsArray(callback) {
 	var expectedOutput = 'p { color:red; }\n#body { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -144,9 +153,10 @@ function cssWithStyleAsFunction(callback) {
 	var expectedOutput = 'p { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -160,9 +170,10 @@ function cssWithStyleAsFunctionWithError(callback) {
 	var input = {sel: 'p', style: styleFunc};
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.ok(typeof result === 'undefined');
-		assert.strictEqual(err, expectedError);
-		callback();
+		callback(function () {
+			assert.ok(typeof result === 'undefined');
+			assert.strictEqual(err, expectedError);
+		});
 	});
 },
 
@@ -174,9 +185,10 @@ function cssAsFunctionWithError(callback) {
 	}
 
 	cssgen.generateCSS(input, function(err, result) {
+		callback(function () {
 		assert.ok(typeof result === 'undefined');
 		assert.strictEqual(err, expectedError);
-		callback();
+		});
 	});
 },
 
@@ -184,9 +196,10 @@ function cssWithInvalidStyleAndError(callback) {
 	var input = {cl: 'body', style: { nonstyle: 'styleval'}};
 
 	cssgen.generateCSS(input, function (err, result) {
+		callback(function () {
 			assert.ok(typeof result === 'undefined');
 			assert.notStrictEqual(err, null);
-			callback();
+		});
 	});
 },
 
@@ -202,9 +215,10 @@ function cssWith100Classes(callback) {
 	}
 
 	cssgen.generateCSS(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 }
 ]);

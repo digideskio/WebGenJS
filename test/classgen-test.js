@@ -31,8 +31,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 'use strict';
 
 var assert = require('assert');
+var testrunner = require('testrunner');
 var classgen = require('../lib/classgen');
-var testrunner = require('./testrunner');
 
 testrunner.runTests([
 
@@ -42,8 +42,9 @@ function classAsString(callback) {
 	var expectedOutput = 'class2';
 
 	classgen.generateClass(input, function(err, result) {
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -53,8 +54,9 @@ function classesAsArray(callback) {
 	var expectedOutput = 'class1 class2';
 
 	classgen.generateClass(input, function(err, result) {
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -66,8 +68,9 @@ function classesAsFunction(callback) {
 	var expectedOutput = 'class1 class2';
 
 	classgen.generateClass(input, function(err, result) {
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -79,9 +82,10 @@ function classesAsFunctionWithError(callback) {
 	}
 
 	classgen.generateClass(input, function(err, result) {
-		assert.ok(typeof result === 'undefined');
-		assert.strictEqual(err, expectedError);
-		callback();
+		callback(function () {
+			assert.ok(typeof result === 'undefined');
+			assert.strictEqual(err, expectedError);
+		});
 	});
 },
 
@@ -97,8 +101,9 @@ function classWith100Classes(callback) {
 	expectedOutput = input.join(' ');
 
 	classgen.generateClass(input, function(err, result) {
+		callback(function () {
 		assert.strictEqual(result, expectedOutput);
-		callback();
+		});
 	});
 }
 ]);

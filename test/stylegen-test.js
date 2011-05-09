@@ -31,8 +31,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 'use strict';
 
 var assert = require('assert');
+var testrunner = require('testrunner');
 var stylegen = require('../lib/stylegen');
-var testrunner = require('./testrunner');
 
 testrunner.runTests([
 
@@ -42,9 +42,10 @@ function styleAsOneValue(callback) {
 	var expectedOutput = 'background:red;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -54,9 +55,10 @@ function styleAsMultipleValuesWithNumber(callback) {
 	var expectedOutput = 'background:red;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -68,9 +70,10 @@ function styleAsFunction(callback) {
 	var expectedOutput = 'background:red;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -82,9 +85,10 @@ function styleAsFunctionWithError(callback) {
 	}
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.ok(typeof result === 'undefined');
-		assert.strictEqual(err, expectedError);
-		callback();
+		callback(function () {
+			assert.ok(typeof result === 'undefined');
+			assert.strictEqual(err, expectedError);
+		});
 	});
 },
 
@@ -94,9 +98,10 @@ function styleAsArray(callback) {
 	var expectedOutput = 'background:red;height:100;width:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -106,9 +111,10 @@ function styleWithValuesAsArray(callback) {
 	var expectedOutput = 'background:red;background:green;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -123,9 +129,10 @@ function styleWith100Styles(callback) {
 	}
 
 	stylegen.generateStyle(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 }
 ]);

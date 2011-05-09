@@ -1,5 +1,5 @@
 {
-	"name" : "WebGenJS",
+	"name" : "webgenjs",
 	"version" : "0.0.1",
 	"author": "Magnus Ernstsson <magnus.ernstsson@patchworksolutions.com>",
 	"keywords": ["web", "jsml", "html", "jss", "css"],

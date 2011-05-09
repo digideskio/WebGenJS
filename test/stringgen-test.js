@@ -31,8 +31,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 'use strict';
 
 var assert = require('assert');
+var testrunner = require('testrunner');
 var stringgen = require('../lib/stringgen');
-var testrunner = require('./testrunner');
 
 testrunner.runTests([
 
@@ -42,9 +42,10 @@ function stringAsString(callback) {
 	var expectedOutput = 'string';
 
 	stringgen.generateString(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -54,9 +55,10 @@ function stringEmpty(callback) {
 	var expectedOutput = '';
 
 	stringgen.generateString(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -66,9 +68,10 @@ function stringAsArrayWithOneString(callback) {
 	var expectedOutput = 'string';
 
 	stringgen.generateString(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -78,9 +81,10 @@ function stringAsArrayWithMultipleStrings(callback) {
 	var expectedOutput = 'stringstring';
 
 	stringgen.generateString(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -90,9 +94,10 @@ function stringAsArrayOfArrays(callback) {
 	var expectedOutput = 'stringstring';
 
 	stringgen.generateString(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -108,9 +113,10 @@ function stringWith100StringsIn100Arrays(callback) {
 	}
 	
 	stringgen.generateString(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 }
 ]);

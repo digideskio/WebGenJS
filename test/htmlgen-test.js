@@ -31,8 +31,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 'use strict';
 
 var assert = require('assert');
+var testrunner = require('testrunner');
 var htmlgen = require('../lib/htmlgen');
-var testrunner = require('./testrunner');
 
 testrunner.runTests([
 
@@ -40,8 +40,9 @@ function htmlWithoutBody(callback) {
 	var input = {tag: 'p'};
 	var expectedOutput = '<p />\n';
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -50,9 +51,10 @@ function htmlWithStringAsBody(callback) {
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -61,9 +63,10 @@ function htmlWithStringArrayAsBody(callback) {
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -81,9 +84,10 @@ function htmlWithTagArrayAsBody(callback) {
 		'</div>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -94,9 +98,10 @@ function htmlWithFunctionAsBody(callback) {
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -109,9 +114,10 @@ function htmlAsFunction(callback) {
 
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -122,9 +128,10 @@ function htmlWithArrayWithFunctionAsBody(callback) {
 	var expectedOutput = '<p>\nbody1\nbody2\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -133,9 +140,10 @@ function htmlWithoutBodyWithAttribute(callback) {
 	var expectedOutput = '<img src=\"img.png\" />\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		assert.strictEqual(err, null);
-		assert.strictEqual(result, expectedOutput);
-		callback();
+		callback(function () {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+		});
 	});
 },
 
@@ -151,9 +159,10 @@ function htmlWithDefaultTagAndBodyAndAttribute(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-			callback();
+			callback(function () {
+				assert.strictEqual(err, null);
+				assert.strictEqual(result, expectedOutput);
+			});
 		}
 	);
 },
@@ -170,9 +179,10 @@ function htmlWithStyleAndClass(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.strictEqual(err, null);
+			callback(function () {
+				assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
-			callback();
+			});
 		}
 	);
 },
@@ -182,9 +192,10 @@ function htmlWithInvalidTagAndError(callback) {
 
 	htmlgen.generateHTML(input,
 		function (err, result) {
-			assert.ok(typeof result === 'undefined');
-			assert.notStrictEqual(err, null);
-			callback();
+			callback(function () {
+				assert.ok(typeof result === 'undefined');
+				assert.notStrictEqual(err, null);
+			});
 		}
 	);
 },
@@ -194,9 +205,10 @@ function htmlWithInvalidStyleAndError(callback) {
 
 	htmlgen.generateHTML(input,
 		function (err, result) {
-			assert.ok(typeof result === 'undefined');
-			assert.notStrictEqual(err, null);
-			callback();
+			callback(function () {
+				assert.ok(typeof result === 'undefined');
+				assert.notStrictEqual(err, null);
+			});
 		}
 	);
 },
@@ -213,9 +225,10 @@ function htmlWithStyleAsFunction(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-			callback();
+			callback(function () {
+				assert.strictEqual(err, null);
+				assert.strictEqual(result, expectedOutput);
+			});
 		}
 	);
 },
@@ -232,9 +245,10 @@ function htmlWithClassAsFunction(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-			callback();
+			callback(function () {
+				assert.strictEqual(err, null);
+				assert.strictEqual(result, expectedOutput);
+			});
 		}
 	);
 },
@@ -250,9 +264,10 @@ function htmlWithStyleAsFunctionWithError(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.ok(typeof result === 'undefined');
-			assert.strictEqual(err, expectedError);
-			callback();
+			callback(function () {
+				assert.ok(typeof result === 'undefined');
+				assert.strictEqual(err, expectedError);
+			});
 		}
 	);
 },
@@ -268,9 +283,10 @@ function htmlWithClassAsFunctionWithError(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.ok(typeof result === 'undefined');
-			assert.strictEqual(err, expectedError);
-			callback();
+			callback(function () {
+				assert.ok(typeof result === 'undefined');
+				assert.strictEqual(err, expectedError);
+			});
 		}
 	);
 },
@@ -291,9 +307,10 @@ function htmlWithJSMLObject(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-			callback();
+			callback(function () {
+				assert.strictEqual(err, null);
+				assert.strictEqual(result, expectedOutput);
+			});
 		}
 	);
 },
@@ -313,9 +330,10 @@ function htmlWith100Tags(callback) {
 	expectedOutput = expectedOutput.concat('</div>\n');
 	htmlgen.generateHTML(input,
 		function (err, result) {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-			callback();
+			callback(function () {
+				assert.strictEqual(err, null);
+				assert.strictEqual(result, expectedOutput);
+			});
 	});
 }
 ]);
