@@ -1,4 +1,3 @@
-#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -30,51 +29,44 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var assert = require('assert');
-var testrunner = require('testrunner');
-var xmlgen = require('../lib/xmlgen');;
+var xmlgen = require('xmlgen');;
 
-testrunner.runTests([
-
-function xmlWithoutBody(callback) {
+exports.testXMLWithoutBody = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag'};
 	var expectedOutput = '<tag />\n';
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithStringAsBody(callback) {
+exports.testXMLWithStringAsBody = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag', body: 'body'};
 	var expectedOutput = '<tag>\nbody\n</tag>\n';
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithStringArrayAsBody(callback) {
+exports.testXMLWithStringArrayAsBody = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag', body: ['body']};
 	var expectedOutput = '<tag>\nbody\n</tag>\n';
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithTagArrayAsBody(callback) {
+exports.testXMLWithTagArrayAsBody = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag1', body: [
 		'body1',
@@ -89,14 +81,13 @@ function xmlWithTagArrayAsBody(callback) {
 		'</tag1>\n';
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithBodyAsFunction(callback) {
+exports.testXMLWithBodyAsFunction = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag', body: function (callback) {
 		callback(null, 'body');
@@ -104,14 +95,13 @@ function xmlWithBodyAsFunction(callback) {
 	var expectedOutput = '<tag>\nbody\n</tag>\n';
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlAsFunction(callback) {
+exports.testXMLAsFunction = function (test, assert) {
 	var empty;
 	var input = function (callback) {
 		callback(null, {tag: 'tag', body: 'body'});
@@ -121,14 +111,13 @@ function xmlAsFunction(callback) {
 
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithArrayWithFunctionAsBody(callback) {
+exports.testXMLWithArrayWithFunctionAsBody = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag', body: [ 'body1', function (callback) {
 		callback(null, 'body2');
@@ -136,27 +125,25 @@ function xmlWithArrayWithFunctionAsBody(callback) {
 	var expectedOutput = '<tag>\nbody1\nbody2\n</tag>\n';
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithoutBodyWithAttribute(callback) {
+exports.testXMLWithoutBodyWithAttribute = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag', attr:'attrvalue'};
 	var expectedOutput = '<tag attr=\"attrvalue\" />\n';
 
 	xmlgen.generateXML(input, empty, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function xmlWithBodyAndAttribute(callback) {
+exports.testXMLWithBodyAndAttribute = function (test, assert) {
 	var empty;
 	var input = {attr1: 'attrvalue1', body:[
 		{tag: 'tag2', body: 'body2'},
@@ -171,15 +158,14 @@ function xmlWithBodyAndAttribute(callback) {
 
 	xmlgen.generateXML(input, {defaultTag:'defaulttag'},
 		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+			test.finish();
 		}
 	);
-},
+};
 
-function xmlWithAttributeGenerator(callback) {
+exports.testXMLWithAttributeGenerator = function (test, assert) {
 	var empty;
 	var attributeValue = 'attrvalue1';
 	var attributeValueRepl = 'attrvaluerepl1';
@@ -200,81 +186,50 @@ function xmlWithAttributeGenerator(callback) {
 
 	xmlgen.generateXML(input, {attributeGenerators:{attr1: generateAttribute}},
 		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+			test.finish();
 		}
 	);
-},
+};
 
-function xmlWithTagValidator(callback) {
+exports.testXMLWithAttributeGeneratorWithError = function (test, assert) {
 	var empty;
-	var input = {tag: 'tag1', body: {tag: 'tag2'}};
+	var attributeValue = 'attrvalue1';
+	var attributeValueRepl = 'attrvaluerepl1';
 
-	var expectedOutput = '<tag1>\n<tag2 />\n</tag1>\n';
+	var input = {tag: 'tag',
+		attr1: attributeValue,
+		attr2: 'attrvalue2'
+	};
 
-	function validateTag(tag) {
-		var retVal = false;
-		if (tag === 'tag1') {
-			retVal = true;
-		} else if (tag === 'tag2') {
-			retVal = true;
-		} else {
-			assert.ok(false);
-		}
-		return retVal;
+	function generateAttribute(attribute, callback) {
+		callback(new Error('TestError'));
 	}
 
-	xmlgen.generateXML(input, {tagValidator:validateTag},
-		function (err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
-	});
-},
-
-function xmlWithTagValidatorAndError(callback) {
-	var empty;
-	var input = {tag: 'tag1', body: {tag: 'tag2'}};
-
-	function validateTag(tag) {
-		var retVal = false;
-		if (tag === 'tag1') {
-			retVal = true;
-		} else if (tag === 'tag2') {
-			assert.ok(false);
-			retVal = true;
+	xmlgen.generateXML(input, {attributeGenerators:{attr1: generateAttribute}},
+		function(err, result) {
+			assert.ok(typeof result === 'undefined');
+			assert.notStrictEqual(err, null);
+			test.finish();
 		}
-		assert.ok(!retVal);
-		return retVal;
-	}
+	);
+};
 
-	xmlgen.generateXML(input, {tagValidator:validateTag},
-		function (err, result) {
-			callback(function () {
-				assert.ok(typeof result === 'undefined');
-				assert.notStrictEqual(err, null);
-			});
-	});
-},
-
-function xmlWithoutTagAndDefaultTag(callback) {
+exports.testXMLWithoutTagAndDefaultTag = function (test, assert) {
 	var empty;
 	var input = {body: 'body'};
 
 	xmlgen.generateXML(input, empty,
 		function(err, result) {
-			callback(function () {
-				assert.ok(typeof result === 'undefined');
-				assert.notStrictEqual(err, null);
-			});
+			assert.ok(typeof result === 'undefined');
+			assert.notStrictEqual(err, null);
+			test.finish();
 		}
 	);
-},
+};
 
-function xmlWithJSMLObject(callback) {
+exports.testXMLWithJSMLObject = function (test, assert) {
 	var empty;
 	var input;
 	var expectedOutput;
@@ -288,17 +243,78 @@ function xmlWithJSMLObject(callback) {
 
 	expectedOutput = '<tag1>\n<tag2 />\n</tag1>\n';
 
-	xmlgen.generateXML(input, empty,
-		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
-		}
-	);
-},
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
 
-function xmlWith100Tags(callback) {
+exports.testXMLWithJSMLObjectWithError = function (test, assert) {
+	var empty;
+	var input;
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testXMLWithUndefined = function (test, assert) {
+	var empty;
+	var input;
+
+	function JSMLObject() {
+		this.toJSML = function (callback) {
+			callback(new Error('TestError'));
+		}
+	}
+	input = new JSMLObject();
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testXMLAsFunction = function (test, assert) {
+	var empty;
+	var input = function (callback) {
+		callback(new Error('TestError'));
+	};
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testXMLWithWrongObjectInBody= function (test, assert) {
+	var empty;
+	var input = {tag:'tag', body: {errordata: empty}};
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testXMLWithUndefinedInBodyArray = function (test, assert) {
+	var empty;
+	var input = {tag:'tag', body: [empty]};
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testXMLWith100Tags = function (test, assert) {
 	var empty;
 	var i;
 	var body = [];
@@ -312,12 +328,9 @@ function xmlWith100Tags(callback) {
 	}
 
 	expectedOutput = expectedOutput.concat('</tag>\n');
-	xmlgen.generateXML(input, empty,
-		function (err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
+	xmlgen.generateXML(input, empty, function (err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-}
-]);
+};

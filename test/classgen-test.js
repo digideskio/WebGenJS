@@ -1,4 +1,3 @@
-#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -30,37 +29,31 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var assert = require('assert');
-var testrunner = require('testrunner');
-var classgen = require('../lib/classgen');
+var classgen = require('classgen');
 
-testrunner.runTests([
-
-function classAsString(callback) {
+exports.testClassAsString = function (test, assert) {
 	var input = 'class2';
 
 	var expectedOutput = 'class2';
 
 	classgen.generateClass(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+}
 
-function classesAsArray(callback) {
+exports.testClassesAsArray = function (test, assert) {
 	var input = ['class1', 'class2'];
 
 	var expectedOutput = 'class1 class2';
 
 	classgen.generateClass(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+}
 
-function classesAsFunction(callback) {
+exports.testClassesAsFunction = function (test, assert) {
 	 function input(callback) {
 		callback(null, ['class1', 'class2']);
 	}
@@ -68,13 +61,12 @@ function classesAsFunction(callback) {
 	var expectedOutput = 'class1 class2';
 
 	classgen.generateClass(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+}
 
-function classesAsFunctionWithError(callback) {
+exports.testClassesAsFunctionWithError = function (test, assert) {
 	var expectedError = 'Test4Error';
 
 	function input(callback) {
@@ -82,14 +74,43 @@ function classesAsFunctionWithError(callback) {
 	}
 
 	classgen.generateClass(input, function(err, result) {
-		callback(function () {
-			assert.ok(typeof result === 'undefined');
-			assert.strictEqual(err, expectedError);
-		});
+		assert.ok(typeof result === 'undefined');
+		assert.strictEqual(err, expectedError);
+		test.finish();
 	});
-},
+}
 
-function classWith100Classes(callback) {
+exports.testClassesAsUndefined = function (test, assert) {
+	var input;
+
+	classgen.generateClass(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+}
+
+exports.testClassesAsNumber = function (test, assert) {
+	var input = 2;
+
+	classgen.generateClass(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+}
+
+exports.testClassesAsWrongObject = function (test, assert) {
+	var input = {input: 'input'};
+
+	classgen.generateClass(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+}
+
+exports.testClassWith100Classes = function (test, assert) {
 	var i;
 	var input = [];
 	var expectedOutput;
@@ -101,9 +122,7 @@ function classWith100Classes(callback) {
 	expectedOutput = input.join(' ');
 
 	classgen.generateClass(input, function(err, result) {
-		callback(function () {
 		assert.strictEqual(result, expectedOutput);
-		});
+		test.finish();
 	});
 }
-]);

@@ -1,4 +1,3 @@
-#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -30,39 +29,33 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var assert = require('assert');
-var testrunner = require('testrunner');
-var stylegen = require('../lib/stylegen');
+var stylegen = require('stylegen');
 
-testrunner.runTests([
-
-function styleAsOneValue(callback) {
+exports.testStyleAsOneValue = function (test, assert) {
 	var input = {background: 'red'};
 
 	var expectedOutput = 'background:red;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function styleAsMultipleValuesWithNumber(callback) {
+exports.testStyleAsMultipleValuesWithNumber = function (test, assert) {
 	var input = {background: 'red', height: 100};
 
 	var expectedOutput = 'background:red;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function styleAsFunction(callback) {
+exports.testStyleAsFunction = function (test, assert) {
 	 function input(callback) {
 		callback(null, {background: 'red', height: 100});
 	}
@@ -70,14 +63,13 @@ function styleAsFunction(callback) {
 	var expectedOutput = 'background:red;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function styleAsFunctionWithError(callback) {
+exports.testStyleAsFunctionWithError = function (test, assert) {
 	var expectedError = 'Test4Error';
 
 	function input(callback) {
@@ -85,40 +77,50 @@ function styleAsFunctionWithError(callback) {
 	}
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.ok(typeof result === 'undefined');
-			assert.strictEqual(err, expectedError);
-		});
+		assert.ok(typeof result === 'undefined');
+		assert.strictEqual(err, expectedError);
+		test.finish();
 	});
-},
+};
 
-function styleAsArray(callback) {
+exports.testStyleAsArray = function (test, assert) {
 	var input = [{background: 'red', height: 100}, {width: 100}];
 
 	var expectedOutput = 'background:red;height:100;width:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function styleWithValuesAsArray(callback) {
+exports.testStyleWithValuesAsArray = function (test, assert) {
 	var input = {background: ['red', 'green'], height: 100};
 
 	var expectedOutput = 'background:red;background:green;height:100;';
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function styleWith100Styles(callback) {
+exports.testStyleAsArrayWithUndefined = function (test, assert) {
+
+	var empty;
+	
+	var input = [empty];
+
+	stylegen.generateStyle(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testStyleWith100Styles = function (test, assert) {
 	var i;
 	var input = [];
 	var expectedOutput = '';
@@ -129,10 +131,8 @@ function styleWith100Styles(callback) {
 	}
 
 	stylegen.generateStyle(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-}
-]);
+};

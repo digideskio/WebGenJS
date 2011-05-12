@@ -1,4 +1,3 @@
-#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -30,78 +29,111 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var assert = require('assert');
-var testrunner = require('testrunner');
-var stringgen = require('../lib/stringgen');
+var stringgen = require('stringgen');
 
-testrunner.runTests([
-
-function stringAsString(callback) {
+exports.testStringAsString = function (test, assert) {
 	var input = 'string';
 
 	var expectedOutput = 'string';
 
 	stringgen.generateString(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function stringEmpty(callback) {
+exports.testStringAsUndefined = function (test, assert) {
+	var input; //Undefined
+
+	stringgen.generateString(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testStringAsFunction = function (test, assert) {
+	var input = function () {};
+
+	stringgen.generateString(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testStringAsNumber = function (test, assert) {
+	var input = 2;
+	
+	var expectedOutput = '2';
+
+	stringgen.generateString(input, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
+exports.testStringAsWrongObject = function (test, assert) {
+	var input = {input: 'input'};
+
+	stringgen.generateString(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testStringEmpty = function (test, assert) {
 	var input = '';
 
 	var expectedOutput = '';
 
 	stringgen.generateString(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function stringAsArrayWithOneString(callback) {
+exports.testStringAsArrayWithOneString = function (test, assert) {
 	var input = ['string'];
 
 	var expectedOutput = 'string';
 
 	stringgen.generateString(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function stringAsArrayWithMultipleStrings(callback) {
+exports.testStringAsArrayWithMultipleStrings = function (test, assert) {
 	var input = ['string', 'string'];
 
 	var expectedOutput = 'stringstring';
 
 	stringgen.generateString(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function stringAsArrayOfArrays(callback) {
+exports.testStringAsArrayOfArrays = function (test, assert) {
 	var input = ['string', ['string']];
 
 	var expectedOutput = 'stringstring';
 
 	stringgen.generateString(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function stringWith100StringsIn100Arrays(callback) {
+exports.testStringWith100StringsIn100Arrays = function (test, assert) {
 	var i;
 	var input = 'string';
 
@@ -113,10 +145,8 @@ function stringWith100StringsIn100Arrays(callback) {
 	}
 	
 	stringgen.generateString(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-}
-]);
+};

@@ -1,4 +1,3 @@
-#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -30,47 +29,41 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var assert = require('assert');
-var testrunner = require('testrunner');
-var htmlgen = require('../lib/htmlgen');
+var htmlgen = require('htmlgen');
 
-testrunner.runTests([
-
-function htmlWithoutBody(callback) {
+exports.testHtmlWithoutBody = function (test, assert) {
 	var input = {tag: 'p'};
 	var expectedOutput = '<p />\n';
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function htmlWithStringAsBody(callback) {
+
+exports.testHtmlWithStringAsBody = function (test, assert) {
 	var input = {tag: 'p', body: 'body'};
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function htmlWithStringArrayAsBody(callback) {
+exports.testHtmlWithStringArrayAsBody = function (test, assert) {
 	var input = {tag: 'p', body: ['body']};
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function htmlWithTagArrayAsBody(callback) {
+exports.testHtmlWithTagArrayAsBody = function (test, assert) {
 	var input = {tag: 'div', body: [
 		'body1',
 		{tag: 'h1', body: 'body2'},
@@ -84,28 +77,26 @@ function htmlWithTagArrayAsBody(callback) {
 		'</div>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function htmlWithFunctionAsBody(callback) {
+exports.testHtmlWithFunctionAsBody = function (test, assert) {
 	var input = {tag: 'p', body: function (callback) {
 		callback(null, 'body');
 	}};
 	var expectedOutput = '<p>\nbody\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function htmlAsFunction(callback) {
+exports.testHtmlAsFunction = function (test, assert) {
 	var input = function (callback) {
 		callback(null, {tag: 'p', body: 'body'});
 	};
@@ -114,40 +105,37 @@ function htmlAsFunction(callback) {
 
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function htmlWithArrayWithFunctionAsBody(callback) {
+exports.testHtmlWithArrayWithFunctionAsBody = function (test, assert) {
 	var input = {tag: 'p', body: [ 'body1', function (callback) {
 		callback(null, 'body2');
 	}]};
 	var expectedOutput = '<p>\nbody1\nbody2\n</p>\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
 			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
-		});
+			test.finish();
 	});
-},
+}
 
-function htmlWithoutBodyWithAttribute(callback) {
+exports.testHtmlWithoutBodyWithAttribute = function (test, assert) {
 	var input = {tag: 'img', src:'img.png'};
 	var expectedOutput = '<img src=\"img.png\" />\n';
 
 	htmlgen.generateHTML(input, function(err, result) {
-		callback(function () {
 			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
-		});
+			test.finish();
 	});
-},
+};
 
-function htmlWithDefaultTagAndBodyAndAttribute(callback) {
+exports.testHtmlWithDefaultTagAndBodyAndAttribute = function (test, assert) {
 	var input = {'class': 'divclass', body:[
 		{tag: 'p', body: 'body2'},
 		{body: 'body3'}
@@ -159,15 +147,14 @@ function htmlWithDefaultTagAndBodyAndAttribute(callback) {
 
 	htmlgen.generateHTML(input,
 		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+			test.finish();
 		}
 	);
-},
+};
 
-function htmlWithStyleAndClass(callback) {
+exports.testHtmlWithStyleAndClass = function (test, assert) {
 	var input = {tag: 'div', body: 'body',
 		'class': ['class1', 'class2'],
 		style: {background: 'red'}
@@ -177,43 +164,14 @@ function htmlWithStyleAndClass(callback) {
 		'style=\"background:red;\">\nbody\n</div>\n';
 
 
-	htmlgen.generateHTML(input,
-		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
+	htmlgen.generateHTML(input, function(err, result) {
+			assert.strictEqual(err, null);
 			assert.strictEqual(result, expectedOutput);
-			});
-		}
-	);
-},
+			test.finish();
+	});
+};
 
-function htmlWithInvalidTagAndError(callback) {
-	var input = {tag: 'nonhtml', body: 'body'};
-
-	htmlgen.generateHTML(input,
-		function (err, result) {
-			callback(function () {
-				assert.ok(typeof result === 'undefined');
-				assert.notStrictEqual(err, null);
-			});
-		}
-	);
-},
-
-function htmlWithInvalidStyleAndError(callback) {
-	var input = {tag: 'div', style: { nonstyle: 'styleval'}, body: 'body'};
-
-	htmlgen.generateHTML(input,
-		function (err, result) {
-			callback(function () {
-				assert.ok(typeof result === 'undefined');
-				assert.notStrictEqual(err, null);
-			});
-		}
-	);
-},
-
-function htmlWithStyleAsFunction(callback) {
+exports.testHtmlWithStyleAsFunction = function (test, assert) {
 
 	function styleFunc(callback) {
 		callback(null, {background: 'red'});
@@ -223,17 +181,14 @@ function htmlWithStyleAsFunction(callback) {
 
 	var expectedOutput = '<div style=\"background:red;\">\nbody\n</div>\n';
 
-	htmlgen.generateHTML(input,
-		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
-		}
-	);
-},
+	htmlgen.generateHTML(input, function(err, result) {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+			test.finish();
+	});
+};
 
-function htmlWithClassAsFunction(callback) {
+exports.testHtmlWithClassAsFunction = function (test, assert) {
 
 	function classFunc(callback) {
 		callback(null, ['class1', 'class2']);
@@ -243,17 +198,15 @@ function htmlWithClassAsFunction(callback) {
 
 	var expectedOutput = '<div class=\"class1 class2\">\nbody\n</div>\n';
 
-	htmlgen.generateHTML(input,
-		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
+	htmlgen.generateHTML(input, function(err, result) {
+			assert.strictEqual(err, null);
+			assert.strictEqual(result, expectedOutput);
+			test.finish();
 		}
 	);
-},
+};
 
-function htmlWithStyleAsFunctionWithError(callback) {
+exports.testHtmlWithStyleAsFunctionWithError = function (test, assert) {
 	var expectedError = 'Test16Error';
 
 	function styleFunc(callback) {
@@ -262,17 +215,14 @@ function htmlWithStyleAsFunctionWithError(callback) {
 
 	var input = {tag: 'div', body: 'body', style: styleFunc};
 
-	htmlgen.generateHTML(input,
-		function(err, result) {
-			callback(function () {
-				assert.ok(typeof result === 'undefined');
-				assert.strictEqual(err, expectedError);
-			});
-		}
-	);
-},
+	htmlgen.generateHTML(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.strictEqual(err, expectedError);
+		test.finish();
+	});
+};
 
-function htmlWithClassAsFunctionWithError(callback) {
+exports.testHtmlWithClassAsFunctionWithError = function (test, assert) {
 	var expectedError = 'Test17Error';
 
 	function classFunc(callback) {
@@ -281,17 +231,14 @@ function htmlWithClassAsFunctionWithError(callback) {
 
 	var input = {tag: 'div', body: 'body', 'class': classFunc};
 
-	htmlgen.generateHTML(input,
-		function(err, result) {
-			callback(function () {
-				assert.ok(typeof result === 'undefined');
-				assert.strictEqual(err, expectedError);
-			});
-		}
-	);
-},
+	htmlgen.generateHTML(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.strictEqual(err, expectedError);
+		test.finish();
+	});
+};
 
-function htmlWithJSMLObject(callback) {
+exports.testHtmlWithJSMLObject = function (test, assert) {
 	var empty;
 	var input;
 	var expectedOutput;
@@ -305,35 +252,32 @@ function htmlWithJSMLObject(callback) {
 
 	expectedOutput = '<div>\n<br />\n</div>\n';
 
-	htmlgen.generateHTML(input,
-		function(err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
-		}
-	);
-},
+	htmlgen.generateHTML(input, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
 
-function htmlWith100Tags(callback) {
+exports.testHtmlWith100TagsWithAttributes = function (test, assert) {
 	var i;
 	var body = [];
 	var input = {tag: 'div', body: body};
-	var expectedOutput = '<div>\n';
+	var expectedResult = '<div>\n';
 
 	for (i = 0; i < 100; i++) {
-		body.push({tag: 'div', body:'body'});
-		expectedOutput = expectedOutput.concat(
-			'<div>\nbody\n</div>\n');
+		body.push({tag: 'div', style:{background:'red', left: 0, right: 0},
+		'class': ['one', 'two'], body:'body'});
+		expectedResult = expectedResult.concat(
+			'<div style=\"background:red;left:0;right:0;\" ' +
+			'class=\"one two\">\nbody\n</div>\n');
 	}
 
-	expectedOutput = expectedOutput.concat('</div>\n');
-	htmlgen.generateHTML(input,
-		function (err, result) {
-			callback(function () {
-				assert.strictEqual(err, null);
-				assert.strictEqual(result, expectedOutput);
-			});
+	expectedResult = expectedResult.concat('</div>\n');
+
+	htmlgen.generateHTML(input, function (err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedResult);
+		test.finish();
 	});
-}
-]);
+};

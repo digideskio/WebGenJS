@@ -1,4 +1,3 @@
-#!/usr/bin/node
 /*
 Copyright 2011 Patchwork Solutions AB. All rights reserved.
 
@@ -30,88 +29,77 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var assert = require('assert');
-var testrunner = require('testrunner');
-var cssgen = require('../lib/cssgen');
+var cssgen = require('cssgen');
 
-
-testrunner.runTests([
-
-function cssWithSelector(callback) {
+exports.testCSSWithSelector = function (test, assert) {
 	var input = {sel: 'p', style: {color: 'red'}};
 
 	var expectedOutput = 'p { color:red; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssWithId(callback) {
+exports.testCSSWithId = function (test, assert) {
 	var input = {id: 'body', style: {color: 'blue'}};
 
 	var expectedOutput = '#body { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssWithClass(callback) {
+exports.testCSSWithClass = function (test, assert) {
 	var input = {cl: 'body', style: {color: 'green'}};
 
 	var expectedOutput = '.body { color:green; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssWithSelectorAndClass(callback) {
+exports.testCSSWithSelectorAndClass = function (test, assert) {
 	var input = {sel: 'h1', cl: 'stuff', style: {color: 'white'}};
 
 	var expectedOutput = 'h1.stuff { color:white; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssWithSelectorAndIdWithError(callback) {
+exports.testCSSWithSelectorAndIdWithError = function (test, assert) {
 	var input = {sel: 'h1', id: 'stuff', style: {color: 'white'}};
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.ok(typeof result === 'undefined');
-			assert.notStrictEqual(err, null);
-		});
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
 	});
-},
+};
 
-function cssWithClassAndIdWithError(callback) {
+exports.testCSSWithClassAndIdWithError = function (test, assert) {
 	var input = {cl: 'h1', id: 'stuff', style: {color: 'white'}};
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.ok(typeof result === 'undefined');
-			assert.notStrictEqual(err, null);
-		});
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
 	});
-},
+};
 
-function cssAsFunction(callback) {
+exports.testCSSAsFunction = function (test, assert) {
 	function input (callback) {
 		callback(null, {sel: 'p', style: {color: 'red'}});
 	}
@@ -119,14 +107,13 @@ function cssAsFunction(callback) {
 	var expectedOutput = 'p { color:red; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssAsArray(callback) {
+exports.testCSSAsArray = function (test, assert) {
 	var input = [
 		{sel: 'p', style: {color: 'red'}},
 		{id: 'body', style: {color: 'blue'}}
@@ -135,14 +122,13 @@ function cssAsArray(callback) {
 	var expectedOutput = 'p { color:red; }\n#body { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssWithStyleAsFunction(callback) {
+exports.testCSSWithStyleAsFunction = function (test, assert) {
 
 	function styleFunc(callback) {
 		callback(null, {color: 'blue'});
@@ -153,15 +139,14 @@ function cssWithStyleAsFunction(callback) {
 	var expectedOutput = 'p { color:blue; }\n';
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-},
+};
 
-function cssWithStyleAsFunctionWithError(callback) {
-	var expectedError = 'Test11Error';
+exports.testCSSWithStyleAsFunctionWithError = function (test, assert) {
+	var expectedError = new Error('TestError');
 
 	function styleFunc(callback) {
 		callback(expectedError);
@@ -170,40 +155,41 @@ function cssWithStyleAsFunctionWithError(callback) {
 	var input = {sel: 'p', style: styleFunc};
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.ok(typeof result === 'undefined');
-			assert.strictEqual(err, expectedError);
-		});
+		assert.ok(typeof result === 'undefined');
+		assert.strictEqual(err, expectedError);
+		test.finish();
 	});
-},
+};
 
-function cssAsFunctionWithError(callback) {
-	var expectedError = 'Test12Error';
+exports.testCSSAsFunctionWithError = function (test, assert) {
+	var expectedError = new Error('TestError');
 
 	function input(callback) {
 		callback(expectedError);
 	}
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
 		assert.ok(typeof result === 'undefined');
 		assert.strictEqual(err, expectedError);
-		});
+		test.finish();
 	});
-},
+};
 
-function cssWithInvalidStyleAndError(callback) {
-	var input = {cl: 'body', style: { nonstyle: 'styleval'}};
+exports.testCSSAsArrayWithUndefined = function (test, assert) {
+	var expectedError = new Error('TestError');
 
-	cssgen.generateCSS(input, function (err, result) {
-		callback(function () {
-			assert.ok(typeof result === 'undefined');
-			assert.notStrictEqual(err, null);
-		});
+	var empty;
+
+	var input = [empty];
+
+	cssgen.generateCSS(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
 	});
-},
+};
 
-function cssWith100Classes(callback) {
+exports.testCSSWith100Classes = function (test, assert) {
 	var i;
 	var input = [];
 	var expectedOutput = '';
@@ -215,10 +201,8 @@ function cssWith100Classes(callback) {
 	}
 
 	cssgen.generateCSS(input, function(err, result) {
-		callback(function () {
-			assert.strictEqual(err, null);
-			assert.strictEqual(result, expectedOutput);
-		});
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
 	});
-}
-]);
+};

@@ -1,0 +1,2 @@
+#!/bin/bash
+find test/*.js -exec whiskey --timeout 5000 --coverage -t {} \;
