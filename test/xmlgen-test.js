@@ -54,6 +54,18 @@ exports.testXMLWithStringAsBody = function (test, assert) {
 	});
 };
 
+exports.testXMLWithNumberAsBody = function (test, assert) {
+	var empty;
+	var input = {tag: 'tag', body: 3};
+	var expectedOutput = '<tag>\n3\n</tag>\n';
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
 exports.testXMLWithStringArrayAsBody = function (test, assert) {
 	var empty;
 	var input = {tag: 'tag', body: ['body']};
@@ -139,6 +151,60 @@ exports.testXMLWithoutBodyWithAttribute = function (test, assert) {
 	xmlgen.generateXML(input, empty, function(err, result) {
 		assert.strictEqual(err, null);
 		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
+exports.testXMLWithFunctionAsAttribute = function (test, assert) {
+	var empty;
+	var input = {tag: 'tag', attr: function (callback) {
+		callback(null, 'attrvalue');
+	}};
+	var expectedOutput = '<tag attr=\"attrvalue\" />\n';
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
+exports.testXMLWithFunctionAsAttributeWithError = function (test, assert) {
+	var empty;
+	var input = {tag: 'tag', attr: function (callback) {
+		callback(new Error('TestError'));
+	}};
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testXMLWithFunctionAsTag = function (test, assert) {
+	var empty;
+	var input = {tag: function (callback) {
+		callback(null, 'tagname');
+	}};
+	var expectedOutput = '<tagname />\n';
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
+exports.testXMLWithFunctionAsTagWithError = function (test, assert) {
+	var empty;
+	var input = {tag: function (callback) {
+		callback(new Error('TestError'));
+	}};
+
+	xmlgen.generateXML(input, empty, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
 		test.finish();
 	});
 };

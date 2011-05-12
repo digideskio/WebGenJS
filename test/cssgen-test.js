@@ -189,6 +189,30 @@ exports.testCSSAsArrayWithUndefined = function (test, assert) {
 	});
 };
 
+exports.testCSSAsString = function (test, assert) {
+	var expectedError = new Error('TestError');
+
+	var input = ['input'];
+
+	cssgen.generateCSS(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testCSSAsNumber = function (test, assert) {
+	var expectedError = new Error('TestError');
+
+	var input = [3];
+
+	cssgen.generateCSS(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
 exports.testCSSWith100Classes = function (test, assert) {
 	var i;
 	var input = [];

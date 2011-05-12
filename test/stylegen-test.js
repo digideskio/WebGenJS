@@ -120,6 +120,26 @@ exports.testStyleAsArrayWithUndefined = function (test, assert) {
 	});
 };
 
+exports.testStyleAsString = function (test, assert) {
+	var input = 'input';
+
+	stylegen.generateStyle(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
+exports.testStyleAsNumber = function (test, assert) {
+	var input = 3;
+
+	stylegen.generateStyle(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+};
+
 exports.testStyleWith100Styles = function (test, assert) {
 	var i;
 	var input = [];
