@@ -5,7 +5,8 @@
 	"keywords": ["web", "jsml", "html", "jss", "css"],
 	"directories" : {
 		"lib" : "./lib",
-		"examples" : "./examples"
+		"examples" : "./examples",
+		"test" : "./test"
 	},
 	"main" : "./lib/webgenjs"
 }
