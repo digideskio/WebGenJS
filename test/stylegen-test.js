@@ -43,6 +43,22 @@ exports.testStyleAsOneValue = function (test, assert) {
 	});
 };
 
+exports.testStyleAsOneValueAsFunction = function (test, assert) {
+	function testFunc(callback) {
+		callback(null, 'red');
+	}
+	
+	var input = {background: testFunc};
+
+	var expectedOutput = 'background:red;';
+
+	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
 exports.testStyleAsMultipleValuesWithNumber = function (test, assert) {
 	var input = {background: 'red', height: 100};
 
@@ -99,6 +115,22 @@ exports.testStyleWithValuesAsArray = function (test, assert) {
 	var input = {background: ['red', 'green'], height: 100};
 
 	var expectedOutput = 'background:red;background:green;height:100;';
+
+	stylegen.generateStyle(input, function(err, result) {
+		assert.strictEqual(err, null);
+		assert.strictEqual(result, expectedOutput);
+		test.finish();
+	});
+};
+
+exports.testStyleWithValuesAsArrayWithFunction = function (test, assert) {
+	function testFunc(callback) {
+		callback(null, 'red');
+	}
+	
+	var input = {background: [testFunc, 'green']};
+
+	var expectedOutput = 'background:red;background:green;';
 
 	stylegen.generateStyle(input, function(err, result) {
 		assert.strictEqual(err, null);

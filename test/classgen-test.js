@@ -53,6 +53,31 @@ exports.testClassesAsArray = function (test, assert) {
 	});
 }
 
+exports.testClassesAsArray = function (test, assert) {
+	var empty;
+	var input = ['class1', empty];
+
+	classgen.generateClass(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+}
+
+exports.testClassesAsArrayWithFunction = function (test, assert) {
+	function testFunc(callback) {
+		callback(null, 'class2');
+	}
+	
+	var input = ['class1', testFunc];
+
+	classgen.generateClass(input, function(err, result) {
+		assert.ok(typeof result === 'undefined');
+		assert.notStrictEqual(err, null);
+		test.finish();
+	});
+}
+
 exports.testClassesAsFunction = function (test, assert) {
 	 function input(callback) {
 		callback(null, ['class1', 'class2']);

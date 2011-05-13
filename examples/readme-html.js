@@ -88,6 +88,7 @@ var moreTagsWithFunctions = {body:
 	],
 	style: paddedBlueStyle
 };
+//These functions are called async when the html is generated.
 
 //=============================================================================
 //Function calls with parameters can of course also be used:

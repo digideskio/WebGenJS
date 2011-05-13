@@ -21,10 +21,6 @@ data in a DOM, such as
 * JavaScript (that is, deploying some of your server scripts on the client...)
 * Others (images, links...)
 
-### Syntax validation
-The basic structure for tag / attribute / style validation is in place, 
-although, only a very crude sanity check is in place so far.
-
 ## Quick tutorial
 ### The markup syntax
 The markup syntax is just any JavaScript object, using a few special 
@@ -85,6 +81,7 @@ var moreTagsWithFunctions = {body:
 	style: paddedBlueStyle
 };
 </pre>
+These functions are called async when the html is generated.
 
 Function calls with parameters can of course also be used:
 <pre>
@@ -264,13 +261,6 @@ htmlgen.generateHTML(allExamples, function (htmlString) {
 ### Writing own utility functions
 Own utility functions can easily be written in order to create a more domain 
 specific description, much similar to the buddy object example above.
-
-## But... why?
-The real use-case for the format and the utilities is still a bit elusive, 
-but if you are (like I know I am) tired of writing messy HTML, tired of CSS 
-looking like JavaScript but not actually being that, and just want to be 
-messing around with a somewhat strange JavaScript representation of, try 
-it out.
 
 ## Contributions
 Any suggestions on improvements or added features? Bring it, I'll see what I 

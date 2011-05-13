@@ -41,7 +41,6 @@ exports.testStyleUtilsRotate = function (test, assert) {
 		'-ms-transform:rotate(5deg);';
 
 	stylegen.generateStyle(input, function(err, result) {
-		console.log(result);
 		assert.strictEqual(result, expectedOutput);
 		test.finish();
 	});
@@ -54,7 +53,6 @@ exports.testStyleUtilsBorderRadius = function (test, assert) {
 		'-moz-border-radius:5;' +
 		'border-radius:5;';
 	stylegen.generateStyle(input, function(err, result) {
-		console.log(result);
 		assert.strictEqual(result, expectedOutput);
 		test.finish();
 	});
@@ -69,7 +67,6 @@ exports.testStyleUtilsBoxShadow = function (test, assert) {
 		'filter:progid:DXImageTransform.Microsoft.Shadow(Color=#000000,' +
 			' Direction=190);';
 	stylegen.generateStyle(input, function(err, result) {
-		console.log(result);
 		assert.strictEqual(result, expectedOutput);
 		test.finish();
 	});
@@ -87,7 +84,6 @@ exports.testStyleUtilLinearGradientTop = function (test, assert) {
 		'-ms-filter:\'progid:DXImageTransform.Microsoft.Gradient(' +
 		'gradientType=0,startColorStr=#001122,endColorStr=#112233\';';
 	stylegen.generateStyle(input, function(err, result) {
-		console.log(result);
 		assert.strictEqual(result, expectedOutput);
 		test.finish();
 	});
