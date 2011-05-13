@@ -70,11 +70,17 @@ var moreTagsImplicitDiv = {body:
 //data:
 function redHeading(callback) {
 	callback(null, {tag: 'h1', body: 'Awesome red heading!',
-	style: {color: 'red'}});
+		style: {color: 'red'}});
 }
 
+var fs = require('fs');
+
 function paragraphText(callback) {
-	callback(null, 'And some paragraph text...');
+	fs.readFile('paragraph.txt', 'ascii',function (err, data) {
+		console.log(err);
+		console.log(data);
+		callback(null, data);
+	});
 }
 
 function paddedBlueStyle(callback) {
