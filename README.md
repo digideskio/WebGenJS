@@ -10,6 +10,7 @@ generating a markup document.
 
 ### Generators
 The generators takes the JavaScript object hierarchy markup and generates:
+
 * XML (with support for adding attribute generators)
 * HTML (with attribute generators for styles and classes)
 * CSS
@@ -27,7 +28,7 @@ a look at the path tag in SVG for example).
 
 ### Utility functions
 Utility functions are available, creating a simplified way of representing 
-data in a DOM, such as
+data in a DOM, such as:
 
 * Layouts (grids, verticals, horizontals...)
 * Lists (bullets, numbered...)
