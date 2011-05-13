@@ -29,7 +29,7 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var htmlgen = require('htmlgen');
+var htmlgen = require('../lib/htmlgen');
 
 exports.testHtmlWithoutBody = function (test, assert) {
 	var input = {tag: 'p'};

@@ -29,7 +29,7 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var stringgen = require('stringgen');
+var stringgen = require('../lib/stringgen');
 
 exports.testStringAsString = function (test, assert) {
 	var input = 'string';

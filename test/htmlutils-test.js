@@ -29,8 +29,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var htmlutils = require('htmlutils');
-var htmlgen = require('htmlgen');
+var htmlutils = require('../lib/htmlutils');
+var htmlgen = require('../lib/htmlgen');
 
 exports.testHtmlUtilsHr = function (test, assert) {
 	var input = htmlutils.hr;

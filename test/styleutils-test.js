@@ -29,8 +29,8 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var styleutils = require('styleutils');
-var stylegen = require('stylegen');
+var styleutils = require('../lib/styleutils');
+var stylegen = require('../lib/stylegen');
 
 exports.testStyleUtilsRotate = function (test, assert) {
 	var input = styleutils.rotate(5);

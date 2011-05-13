@@ -29,7 +29,7 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var xmlgen = require('xmlgen');;
+var xmlgen = require('../lib/xmlgen');
 
 exports.testXMLWithoutBody = function (test, assert) {
 	var empty;

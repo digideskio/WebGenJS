@@ -29,7 +29,7 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var cssgen = require('cssgen');
+var cssgen = require('../lib/cssgen');
 
 exports.testCSSWithSelector = function (test, assert) {
 	var input = {sel: 'p', style: {color: 'red'}};

@@ -29,7 +29,7 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var stylegen = require('stylegen');
+var stylegen = require('../lib/stylegen');
 
 exports.testStyleAsOneValue = function (test, assert) {
 	var input = {background: 'red'};

@@ -29,7 +29,7 @@ policies, either expressed or implied, of Patchwork Solutions AB.
 
 'use strict';
 
-var classgen = require('classgen');
+var classgen = require('../lib/classgen');
 
 exports.testClassAsString = function (test, assert) {
 	var input = 'class2';

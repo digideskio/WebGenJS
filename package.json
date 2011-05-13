@@ -10,6 +10,5 @@
 		"test" : "./test"
 	},
 	"main" : "./lib/webgenjs",
-	"devDependencies" : {"whiskey" : ""},
 	"scripts": {"test": "whiskey --coverage -t \"test/classgen-test.js test/cssgen-test.js test/htmlgen-test.js test/stringgen-test.js test/stylegen-test.js test/xmlgen-test.js test/htmlutils-test.js test/styleutils-test.js\""}
 }
