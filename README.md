@@ -303,6 +303,12 @@ htmlgen.generateHTML(allExamples, function (htmlString) {
 Own utility functions can easily be written in order to create a more domain 
 specific description, much similar to the buddy object example above.
 
+## Installation
+Install it using npm:
+<pre>
+npm install webgenjs
+</pre>
+
 ## Contributions
 Any suggestions on improvements or added features? Bring it, I'll see what I 
 can do. Any code contributions, perhaps sorting out all those horrible tags 
