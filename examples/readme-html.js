@@ -76,7 +76,7 @@ function redHeading(callback) {
 var fs = require('fs');
 
 function paragraphText(callback) {
-	fs.readFile('paragraph.txt', 'ascii',function (err, data) {
+	fs.readFile('paragraph.txt', 'ascii', function (err, data) {
 		console.log(err);
 		console.log(data);
 		callback(null, data);

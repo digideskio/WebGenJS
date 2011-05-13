@@ -234,6 +234,27 @@ var gridWidth = 2;
 var buddyObjectLayout = {body: utils.gridLayout(buddyObjects, gridWidth)};
 </pre>
 
+Or alternatively read the data async from the file system
+<pre>
+var fs = require('fs');
+
+var buddiesPath = 'buddies.txt';
+fs.writeFileSync(buddiesPath, buddies.join('\n'));
+
+function loadBuddies(callback) {
+	fs.readFile(buddiesPath, function (err, data) {
+		
+		var buddies = data.toString().split('\n').map(function (line) {
+			return new Buddy(line + " (from file)");
+		});
+		callback(null, utils.gridLayout(buddies, gridWidth));
+		fs.unlink(buddiesPath);
+	});
+}
+
+var buddyObjectLayoutFromFile = {body: loadBuddies};
+</pre>
+
 Lists, such as numbered lists, can be used like this:
 <pre>
 var startNumber = 33;
