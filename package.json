@@ -4,11 +4,6 @@
 	"version" : "0.0.1",
 	"author": "Magnus Ernstsson <magnus.ernstsson@patchworksolutions.com>",
 	"keywords": ["web", "jsml", "html", "jss", "css"],
-	"directories" : {
-		"lib" : "./lib",
-		"examples" : "./examples",
-		"test" : "./test"
-	},
-	"main" : "./lib/webgenjs",
-	"scripts": {"test": "whiskey --coverage -t \"test/classgen-test.js test/cssgen-test.js test/htmlgen-test.js test/stringgen-test.js test/stylegen-test.js test/xmlgen-test.js test/htmlutils-test.js test/styleutils-test.js\""}
+	"directories" : {"lib" : "./gen/lib"},
+	"main" : "./gen/lib/webgenjs"
 }
