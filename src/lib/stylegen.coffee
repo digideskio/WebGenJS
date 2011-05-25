@@ -38,7 +38,7 @@ handleStyleNumber = (style, callback) ->
 
 handleStyleFunction = (styles, callback) ->
 	styles (err, data) ->
-		process.nextTick () ->
+		process.nextTick ->
 			if err then callback err
 			else exports.generateStyle data, callback
 
@@ -47,9 +47,9 @@ handleStyleData = (styles, callback) ->
 	stylesArray = []
 
 	callStyleValueFunction = (styleValues, pos) ->
-		process.nextTick () ->
+		process.nextTick ->
 			styleValues (err, result) ->
-				process.nextTick () ->
+				process.nextTick ->
 					count--
 					if count is 0
 						stylesArray[pos] = result
@@ -100,8 +100,8 @@ routeStyle =
 	'number': handleStyleNumber
 
 exports.generateStyle = (styles, callback) ->
-	process.nextTick () ->
+	process.nextTick ->
 		routeStyle[typeof styles] styles, (err, result) ->
-			process.nextTick () ->
+			process.nextTick ->
 				if err then callback err
 				else stringgen.generateString result, callback

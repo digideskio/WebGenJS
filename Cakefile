@@ -27,7 +27,7 @@ build = (src, dst, callback) ->
 
 pretest = (callback) ->
 	process.chdir genDir
-	build testSrcDir, testGenDir, () ->
+	build testSrcDir, testGenDir, ->
 		fs.readdir testGenDir, (err, files) ->
 			paths = files.map (file) -> "#{testGenDir}/#{file}"
 			pathsString = paths.join ' '
@@ -45,7 +45,7 @@ test = (callback) ->
 	pretest (pathsString) ->
 		exec "whiskey --coverage -t \"#{pathsString}\"",
 		(err, stdout, stderr) ->
-			posttest err, stdout, stderr, () ->
+			posttest err, stdout, stderr, ->
 				callback() if callback?
 
 htmltest = (callback) ->
@@ -54,22 +54,22 @@ htmltest = (callback) ->
 		--coverage-reporter html --coverage-dir cov
 		-t \"#{pathsString}\"",
 		(err, stdout, stderr) ->
-			posttest err, stdout, stderr, () ->
+			posttest err, stdout, stderr, ->
 				callback() if callback?
 
 buildAll = (callback) ->
 	build libSrcDir, libGenDir, callback
 
-task 'all', 'build and test all', () ->
-	buildAll () ->
+task 'all', 'build and test all', ->
+	buildAll ->
 		test()
 
-task 'build', 'build all files', () ->
+task 'build', 'build all files', ->
 	buildAll()
 
-task 'test', 'run all tests', () ->
+task 'test', 'run all tests', ->
 	test()
 
-task 'test-html', 'run all tests with html coverage report', () ->
+task 'test-html', 'run all tests with html coverage report', ->
 	htmltest()
 

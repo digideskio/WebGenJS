@@ -36,7 +36,7 @@ generateXMLJSMLData = (object, session, callback) ->
 	tag = object.tag
 	count = 0
 	
-	generateXMLBodyArray = () ->
+	generateXMLBodyArray = ->
 		bodyArray = object.body.map (item, index) ->
 			count++
 			exports.generateXML item, session, (err, data) ->
@@ -47,7 +47,7 @@ generateXMLJSMLData = (object, session, callback) ->
 					callback err, dataArray if count is 0
 		dataArray.push bodyArray
 	
-	generateXMLBodyData = () ->
+	generateXMLBodyData = ->
 		dataArray.push ''
 		count++
 		bodyPos = dataArray.length - 1
@@ -60,7 +60,7 @@ generateXMLJSMLData = (object, session, callback) ->
 				callback err, dataArray if count is 0
 	
 	callAttributeFuncObject = (data, position) ->
-		process.nextTick () ->
+		process.nextTick ->
 			count++
 			data (err, data) ->
 				if err then callback err
@@ -69,10 +69,10 @@ generateXMLJSMLData = (object, session, callback) ->
 					dataArray[position] = data
 					callback err, dataArray if count is 0
 
-	generateXMLAttributes = () ->
+	generateXMLAttributes = ->
 		callAttributeGenerator = (generator, data, position) ->
 			count++
-			process.nextTick () ->
+			process.nextTick ->
 				generator data, (err, data) ->
 					if err then callback err
 					else
@@ -128,7 +128,7 @@ handleXMLObject = (object, session, callback) ->
 
 handleXMLFunction = (xml, session, callback) ->
 	xml (err, data) ->
-		process.nextTick () ->
+		process.nextTick ->
 			if (err) then callback err
 			else exports.generateXML data, session, callback
 
@@ -143,8 +143,8 @@ routeXML =
 	'string': handleXMLString
 
 exports.generateXML = (xml, session, callback) ->
-	process.nextTick () ->
+	process.nextTick ->
 		routeXML[typeof xml] xml, session, (err, data) ->
-			process.nextTick () ->
+			process.nextTick ->
 				if err then callback err
 				else stringgen.generateString data, callback

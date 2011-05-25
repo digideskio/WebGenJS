@@ -69,7 +69,7 @@ handleCSSObject = (object, callback) ->
 
 handleCSSFunction = (css, callback) ->
 	css (err, result) ->
-		process.nextTick () ->
+		process.nextTick ->
 			if err then callback err
 			else exports.generateCSS result, callback
 
@@ -90,9 +90,9 @@ routeCSS =
 	'number': handleCSSNumber
 
 exports.generateCSS = (css, callback) ->
-	process.nextTick () ->
+	process.nextTick ->
 		routeCSS[typeof css] css, (err, result) ->
-			process.nextTick () ->
+			process.nextTick ->
 				if err then callback err
 				else stringgen.generateString result, (err, result) ->
 					callback err, result

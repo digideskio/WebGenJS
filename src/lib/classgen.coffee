@@ -38,7 +38,7 @@ handleClassData = (classes, callback) ->
 
 handleClassFunction = (classes, callback) ->
 	classes (err, data) ->
-		process.nextTick () ->
+		process.nextTick ->
 			if err then callback err
 			else exports.generateClass data, callback
 
@@ -64,8 +64,8 @@ routeClass =
 	'number': handleClassNumber
 
 exports.generateClass = (classes, callback) ->
-	process.nextTick () ->
+	process.nextTick ->
 		routeClass[typeof classes] classes, (err, data) ->
-			process.nextTick () ->
+			process.nextTick ->
 				if err then callback err
 				else stringgen.generateString data, callback

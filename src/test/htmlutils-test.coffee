@@ -201,7 +201,7 @@ exports.testHtmlUtilsCSSId = (test, assert) ->
 		assert.strictEqual result, expectedOutput
 		test.finish()
 
-testFunc = () -> 1
+testFunc = -> 1
 
 	
 exports.testHtmlUtilsScript = (test, assert) ->

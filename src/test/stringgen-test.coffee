@@ -54,7 +54,7 @@ exports.testStringAsNull = (test, assert) ->
 		test.finish()
 
 exports.testStringAsFunction = (test, assert) ->
-	input = () ->
+	input = ->
 
 	stringgen.generateString input, (err, result) ->
 		assert.ok not result?

@@ -28,7 +28,7 @@
 handleStringErrorFunction = (func) ->
 	throw new Error "String Generator Error: Function: #{func}"
 
-handleStringErrorUndefined = () ->
+handleStringErrorUndefined = ->
 	throw new Error 'String Generator Error: Undefined'
 
 handleStringString = (string) -> string
@@ -51,6 +51,6 @@ routeString =
 generateStringSync = (strings) -> routeString[typeof strings] strings
 
 exports.generateString = (strings, callback) ->
-	process.nextTick () -> 
+	process.nextTick -> 
 		try callback null, generateStringSync strings
 		catch error then callback error

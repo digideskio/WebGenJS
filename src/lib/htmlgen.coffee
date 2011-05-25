@@ -32,12 +32,12 @@ xmlgen = require './xmlgen'
 defaultTag = 'div'
 
 exports.generateHTML = (html, callback) ->
-	process.nextTick () -> 
+	process.nextTick -> 
 		xmlgen.generateXML html,
 			attributeGenerators:
 				style: stylegen.generateStyle
 				'class': classgen.generateClass
 			defaultTag: defaultTag
 			(err, result) ->
-				process.nextTick () ->
+				process.nextTick ->
 					callback err, result
