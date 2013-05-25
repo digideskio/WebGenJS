@@ -25,7 +25,7 @@
 #those of the authors and should not be interpreted as representing official
 #policies, either expressed or implied, of Patchwork Solutions AB.
 
-classgen = (require '../lib-cov/webgenjs').classgen;
+classgen = (require '../lib-cov/webgenjs').classgen
 
 exports.testClassAsString = (test, assert) ->
 	input = 'class2'

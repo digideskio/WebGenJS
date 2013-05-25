@@ -31,15 +31,23 @@ handleStringErrorFunction = (func) ->
 handleStringErrorUndefined = ->
 	throw new Error 'String Generator Error: Undefined'
 
+handleStringNonArrayObject = (object) ->
+	throw new Error "String Generator Error: Non-Array Object: #{object}"
+
 handleStringString = (string) -> string
 
 handleStringNumber = (number) -> number.toString()
 
+handleStringArrayObject = (object) ->
+	retVal = object.map generateStringSync
+	retVal.join ''
+
 handleStringObject = (object) ->
-	if object instanceof Array
-		retVal = object.map generateStringSync
-		retVal.join ''
-	else throw new Error "String Generator Error: Non-Array Object: #{object}"
+	routeStringObject[object instanceof Array] object
+
+routeStringObject = 
+	true: handleStringArrayObject
+	false: handleStringNonArrayObject
 
 routeString = 
 	'object': handleStringObject

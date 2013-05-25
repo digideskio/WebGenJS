@@ -140,7 +140,7 @@ exports.testXMLWithFunctionAsAttributeWithError = (test, assert) ->
 
 exports.testXMLWithFunctionAsTag = (test, assert) ->
 	input = {tag: (callback) -> callback null, 'tagname'}
-	
+
 	expectedOutput = '<tagname />\n'
 
 	xmlgen.generateXML input, null, (err, result) ->
@@ -206,7 +206,8 @@ exports.testXMLWithAttributeGeneratorWithError = (test, assert) ->
 		attr1: attributeValue,
 		attr2: 'attrvalue2'
 
-	generateAttribute = (attribute, callback) -> callback new Error 'TestError'
+	generateAttribute = (attribute, callback) ->
+		callback new Error 'TestError'
 
 	xmlgen.generateXML input, {
 		attributeGenerators:{attr1: generateAttribute}
@@ -230,7 +231,7 @@ exports.testXMLWithJSMLObject = (test, assert) ->
 
 	input = new JSMLObject
 
-	expectedOutput = '<tag1>\n<tag2 />\n</tag1>\n';
+	expectedOutput = '<tag1>\n<tag2 />\n</tag1>\n'
 
 	xmlgen.generateXML input, null, (err, result) ->
 		assert.ok not err?

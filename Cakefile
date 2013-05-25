@@ -43,7 +43,7 @@ posttest = (err, stdout, stderr, callback) ->
     
 test = (callback) ->
 	pretest (pathsString) ->
-		exec "whiskey --coverage -t \"#{pathsString}\"",
+		exec "NODE_PATH=lib-cov/ whiskey --coverage -t \"#{pathsString}\"",
 		(err, stdout, stderr) ->
 			posttest err, stdout, stderr, ->
 				callback() if callback?

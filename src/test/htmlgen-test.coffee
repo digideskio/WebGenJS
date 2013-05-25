@@ -145,7 +145,7 @@ exports.testHtmlWithStyleAsFunction = (test, assert) ->
 
 	input = {tag: 'div', body: 'body', style: styleFunc}
 
-	expectedOutput = '<div style=\"background:red;\">\nbody\n</div>\n';
+	expectedOutput = '<div style=\"background:red;\">\nbody\n</div>\n'
 
 	htmlgen.generateHTML input, (err, result) ->
 			assert.ok not err?
@@ -158,7 +158,7 @@ exports.testHtmlWithClassAsFunction = (test, assert) ->
 
 	input = {tag: 'div', body: 'body', 'class': classFunc}
 
-	expectedOutput = '<div class=\"class1 class2\">\nbody\n</div>\n';
+	expectedOutput = '<div class=\"class1 class2\">\nbody\n</div>\n'
 
 	htmlgen.generateHTML input, (err, result) ->
 			assert.ok not err?

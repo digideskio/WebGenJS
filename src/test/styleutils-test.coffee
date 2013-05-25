@@ -45,7 +45,7 @@ exports.testStyleUtilsBorderRadius = (test, assert) ->
 
 	expectedOutput = '-webkit-border-radius:5;' +
 		'-moz-border-radius:5;' +
-		'border-radius:5;';
+		'border-radius:5;'
 	stylegen.generateStyle input, (err, result) ->
 		assert.strictEqual result, expectedOutput
 		test.finish()
@@ -57,7 +57,7 @@ exports.testStyleUtilsBoxShadow = (test, assert) ->
 		'-moz-box-shadow:5;' +
 		'box-shadow:5;' +
 		'filter:progid:DXImageTransform.Microsoft.Shadow(Color=#000000,' +
-			' Direction=190);';
+			' Direction=190);'
 	stylegen.generateStyle input, (err, result) ->
 		assert.strictEqual result, expectedOutput
 		test.finish()
@@ -72,7 +72,7 @@ exports.testStyleUtilLinearGradientTop = (test, assert) ->
 		'filter:progid:DXImageTransform.Microsoft.Gradient(' +
 		'gradientType=0,startColorStr=#001122,endColorStr=#112233);' +
 		'-ms-filter:\'progid:DXImageTransform.Microsoft.Gradient(' +
-		'gradientType=0,startColorStr=#001122,endColorStr=#112233\';';
+		'gradientType=0,startColorStr=#001122,endColorStr=#112233\';'
 
 	stylegen.generateStyle input, (err, result) ->
 		assert.strictEqual result, expectedOutput

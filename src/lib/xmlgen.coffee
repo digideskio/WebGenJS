@@ -35,7 +35,7 @@ generateXMLJSMLData = (object, session, callback) ->
 	dataArray = []
 	tag = object.tag
 	count = 0
-	
+
 	generateXMLBodyArray = ->
 		bodyArray = object.body.map (item, index) ->
 			count++
@@ -46,19 +46,19 @@ generateXMLJSMLData = (object, session, callback) ->
 					bodyArray[index] = data
 					callback err, dataArray if count is 0
 		dataArray.push bodyArray
-	
+
 	generateXMLBodyData = ->
 		dataArray.push ''
 		count++
 		bodyPos = dataArray.length - 1
-		
+
 		exports.generateXML object.body, session, (err, result) ->
 			if err then callback err
 			else
 				count--
 				dataArray[bodyPos] = result
 				callback err, dataArray if count is 0
-	
+
 	callAttributeFuncObject = (data, position) ->
 		process.nextTick ->
 			count++
@@ -99,7 +99,7 @@ generateXMLJSMLData = (object, session, callback) ->
 	if not tag? and session? then tag = session.defaultTag
 	if tag?
 		dataArray.push '<'
-	
+
 		if typeof tag is 'function'
 			dataArray.push ''
 			callAttributeFuncObject tag, dataArray.length - 1
